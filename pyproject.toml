@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "genesis-gymnasium"
+version = "0.1.0"
+description = "Gymnasium environment using Genesis"
+authors = ["Mikihisa Yuasa <myuasa2@illinois.edu>"]
+license = "Apache Licence 2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
