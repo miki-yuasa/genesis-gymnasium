@@ -86,14 +86,17 @@ class GenesisEnv(gym.Env, ABC):
 
     def render(
         self,
-    ) -> list[RenderOutput]:
+    ) -> RenderOutput | list[RenderOutput]:
         """
         Renders the environment.
 
         Returns
         -------
-        image: numpy.ndarray
-            The rendered image.
+        output: RenderOutput | list[RenderOutput]
+            The rendered output.
+            Contains the RGB, depth, segmentation, and normal arrays.
+            If there is only one camera, returns a single RenderOutput.
+            If there are multiple cameras, returns a list of RenderOutputs.
         """
 
         rgb: bool = (
@@ -121,6 +124,9 @@ class GenesisEnv(gym.Env, ABC):
         )
         output: list[RenderOutput] = []
         for cam in self.scene._visualizer._cameras:
-            output.append(cam(rgb, depth, segmentation, colorized_seg, normal))
+            output.append(cam.render(rgb, depth, segmentation, colorized_seg, normal))
 
-        return output
+        if len(output) == 1:
+            return output[0]
+        else:
+            return output
