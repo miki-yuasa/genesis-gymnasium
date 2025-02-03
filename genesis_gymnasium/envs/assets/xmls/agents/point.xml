@@ -38,7 +38,8 @@
         <subtreeangmom body="point" name="subtreeangmom" />
     </sensor>
     <actuator>
-        <motor gear="0.3 0 0 0 0 0" site="point" name="x" />
+        <!-- <motor gear="0.3 0 0 0 0 0" site="point" name="x" /> -->
+        <velocity gear="0.3" jointinparent="x" name="x" />
         <velocity gear="0.3" jointinparent="z" name="z" />
     </actuator>
 </mujoco>

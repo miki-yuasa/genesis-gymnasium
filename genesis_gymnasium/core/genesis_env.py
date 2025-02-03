@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import Any, TypeAlias, Literal
+from typing import Any, TypeAlias, Literal, TypedDict
 
 import genesis as gs
 import gymnasium as gym
@@ -44,6 +44,17 @@ DEFAULT_SCENE: gs.Scene = gs.Scene(
     ),
     renderer=gs.renderers.Rasterizer(),  # using rasterizer for camera rendering
 )
+
+
+class SceneConfig(TypedDict):
+    sim_options: gs.options.SimOptions
+    coupler_options: gs.options.CouplerOptions
+    tool_options: gs.options.ToolOptions
+
+    show_viewer: bool
+    viewer_options: gs.options.ViewerOptions
+    vis_options: gs.options.VisOptions
+    renderer: gs.renderers.Renderer
 
 
 class GenesisEnv(gym.Env, ABC):

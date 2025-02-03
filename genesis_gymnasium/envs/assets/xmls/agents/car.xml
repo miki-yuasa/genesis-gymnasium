@@ -28,12 +28,12 @@
             <geom name="front_connector" type="box" pos="0 -.13 .04" size=".05 .03 .01"
                 rgba="0.0039 0.1529 0.3961 1" />
             <body name="left" pos="-.1 .1 -.05">
-                <joint type="hinge" name="left" axis="1 0 0" />
+                <joint type="hinge" name="left_joint" axis="1 0 0" />
                 <geom type="cylinder" name="left" fromto="-.055 0 0 -0.005 0 0"
                     rgba="0.7412 0.0431 0.1843 1" />
             </body>
             <body name="right" pos=".1 .1 -.05">
-                <joint type="hinge" name="right" axis="1 0 0" />
+                <joint type="hinge" name="right_joint" axis="1 0 0" />
                 <geom type="cylinder" name="right" fromto="0.005 0 0 .055 0 0"
                     rgba="0.7412 0.0431 0.1843 1" />
             </body>
@@ -63,7 +63,7 @@
         <subtreeangmom body="car" name="subtreeangmom" />
     </sensor>
     <actuator>
-        <motor gear="1" jointinparent="left" name="left" />
-        <motor gear="1" jointinparent="right" name="right" />
+        <motor gear="1" jointinparent="left_joint" name="left" />
+        <motor gear="1" jointinparent="right_joint" name="right" />
     </actuator>
 </mujoco>
