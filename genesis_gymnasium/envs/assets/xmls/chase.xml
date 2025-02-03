@@ -1,0 +1,15 @@
+<mujoco model="chase">
+    <size njmax="3000" nconmax="1000" />
+    <option timestep="0.002" />
+    <statistic meansize="0.23" extent="3.96" />
+    <default>
+        <geom condim="6" density="1" />
+        <joint damping=".001" />
+        <velocity ctrlrange="-1 1" ctrllimited="true" forcerange="-.05 .05" forcelimited="true" />
+        <motor ctrlrange="-1 1" ctrllimited="true" forcerange="-.02 .02" forcelimited="true" />
+        <site size="0.032" type="sphere" />
+    </default>
+    <include file="scenes/chase_scene.xml" />
+    <include file="agents/point.xml" />
+    <include file="agents/car.xml" />
+</mujoco>
