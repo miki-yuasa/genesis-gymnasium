@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import Any, TypeAlias
+from typing import Any, TypeAlias, Literal
 
 import genesis as gs
 import gymnasium as gym
@@ -8,12 +8,42 @@ import numpy as np
 from numpy.typing import NDArray
 import torch
 
+RenderMode: TypeAlias = Literal[
+    "rgb_array",
+    "depth_array",
+    "seg_array",
+    "colorized_seg_array",
+    "normal_array",
+    "all_arrays",
+    "human",
+]
+
 RenderOutput: TypeAlias = tuple[
     NDArray[np.uint8] | None,
     NDArray[np.uint8] | None,
     NDArray[np.uint8] | None,
     NDArray[np.uint8] | None,
 ]
+
+DEFAULT_SCENE: gs.Scene = gs.Scene(
+    show_viewer=False,
+    viewer_options=gs.options.ViewerOptions(
+        res=(1280, 960),
+        camera_pos=(3.5, 0.0, 2.5),
+        camera_lookat=(0.0, 0.0, 0.5),
+        camera_fov=40,
+        max_FPS=60,
+    ),
+    vis_options=gs.options.VisOptions(
+        show_world_frame=True,  # visualize the coordinate frame of `world` at its origin
+        world_frame_size=1.0,  # length of the world frame in meter
+        show_link_frame=False,  # do not visualize coordinate frames of entity links
+        show_cameras=False,  # do not visualize mesh and frustum of the cameras added
+        plane_reflection=True,  # turn on plane reflection
+        ambient_light=(0.1, 0.1, 0.1),  # ambient light setting
+    ),
+    renderer=gs.renderers.Rasterizer(),  # using rasterizer for camera rendering
+)
 
 
 class GenesisEnv(gym.Env, ABC):
@@ -33,7 +63,9 @@ class GenesisEnv(gym.Env, ABC):
         ],
     }
 
-    def __init__(self, scene: gs.Scene, render_mode: str = "rgb_array") -> None:
+    def __init__(
+        self, scene: gs.Scene = DEFAULT_SCENE, render_mode: str = "rgb_array"
+    ) -> None:
         """
         Initializes the Genesis environment.
 
@@ -126,7 +158,9 @@ class GenesisEnv(gym.Env, ABC):
         for cam in self.scene._visualizer._cameras:
             output.append(cam.render(rgb, depth, segmentation, colorized_seg, normal))
 
-        if len(output) == 1:
+        if len(output) == 0:
+            raise ValueError("No cameras found in the scene.")
+        elif len(output) == 1:
             return output[0]
         else:
             return output
