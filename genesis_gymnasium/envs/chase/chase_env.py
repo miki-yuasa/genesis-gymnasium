@@ -14,6 +14,11 @@ class ChaseEnv(GenesisEnv):
         self.agent = self.scene.add_entity(
             gs.morphs.MJCF(file="genesis_gymnasium/envs/assets/xmls/agents/car.xml")
         )
-        self.adversary = self.scene.add_entity(
-            gs.morphs.MJCF(file="genesis_gymnasium/envs/assets/xmls/agents/point.xml")
+        # self.adversary = self.scene.add_entity(
+        #     gs.morphs.MJCF(file="genesis_gymnasium/envs/assets/xmls/agents/point.xml")
+        # )
+
+    def _add_camera(self) -> None:
+        self.scene.add_camera(
+            res=(1280, 960), pos=(3.5, 0.0, 2.5), lookat=(0, 0, 0.5), fov=30, GUI=False
         )

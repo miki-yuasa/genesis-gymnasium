@@ -74,6 +74,7 @@ class GenesisEnv(gym.Env, ABC):
         """
         self.scene: gs.Scene = scene
         self._add_entities()
+        self._add_camera()
         self.scene.build()
 
         self.render_mode: str = render_mode
@@ -86,6 +87,12 @@ class GenesisEnv(gym.Env, ABC):
     def _add_entities(self) -> None:
         """
         Adds entities to the scene.
+        """
+        raise NotImplementedError
+
+    def _add_camera(self) -> None:
+        """
+        Adds camera to the scene.
         """
         raise NotImplementedError
 
